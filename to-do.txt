@@ -1,0 +1,5 @@
+
+1. install-gpio
+	- change to variables
+	- set install folder (+git download) to /var/PAI/Apps/GPIO (create folder if not exists mkdir-p)
+
