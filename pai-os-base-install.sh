@@ -93,7 +93,7 @@ pai_update_os()
 	log "\e[34mOS updated :)\n"
 	cd /usr/include/linux
 	ln -s -f ../libv4l1-videodev.h videodev.h
-	chown -R $USER:$USER $HOME/.cache/
+	chown -R ${USER}:${USER} $HOME/.cache/
 	echo ""
 	echo ""
 }
@@ -181,8 +181,8 @@ pai_nodejs_install()
 	apt-get -y -qq install nodejs
 	npm i -g fsevents
 	npm i -g forever
-	chown -R $USER:$(id -gn $USER) $HOME/.config
-	usermod -aG docker $USER
+	chown -R ${USER}:$(id -gn ${USER}) $HOME/.config
+	usermod -aG docker ${USER}
 	log "\e[34mDone...\n"
 	echo ""
 }
@@ -210,8 +210,8 @@ pai_install_jetson_inference()
 	pip3 install Cython
 	pip3 install scikit-build
 	pip3 install ninja
-	chown -R $USER:$USER $PAI_APPS_FOLDER
-	chown -R $USER:$USER $PAI_SYSTEM_FOLDER
+	chown -R ${USER}:${USER} $PAI_APPS_FOLDER
+	chown -R ${USER}:${USER} $PAI_SYSTEM_FOLDER
 	git clone --recursive $DUSTYN_JETSON_INFERENCE_GIT_LINK $PAI_APPS_FOLDER/$DUSTYN_JETSON_INFERENCE_GIT_FOLDER_NAME
 	cd $PAI_APPS_FOLDER/$DUSTYN_JETSON_INFERENCE_GIT_FOLDER_NAME
 	mkdir -p build && cd build

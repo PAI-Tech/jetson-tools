@@ -46,7 +46,7 @@ log(){
 }
 
 # Give permissions for PIP
-chown -R $USER:$USER $PIP_FOLDER
+chown -R ${USER}:${USER} $PIP_FOLDER
 
 pai_jetson_gpio_install()
 {
@@ -54,26 +54,27 @@ pai_jetson_gpio_install()
 	log -e "\e[34mInstalling requirments for Sensor Project\n"
 	echo ""
 	mkdir -p $PAI_APPS_FOLDER
-	chown -R $USER:$USER $PAI_APPS_FOLDER
+	chown -R ${USER}:${USER} $PAI_APPS_FOLDER
 	echo ""
 
-	log -e "\e[33mInstall Jetson GPIO\n"
+	log -e "\e[33mInstall Jetson GPIO + BMP280\n"
 	git clone $GIT_REPO_JETSON_GPIO $GIT_REPO_JETSON_GPIO_FOLDER
-	chown -R $USER:$USER $GIT_REPO_JETSON_GPIO_FOLDER
+	chown -R ${USER}:${USER} $GIT_REPO_JETSON_GPIO_FOLDER
 	cd $GIT_REPO_JETSON_GPIO_FOLDER
 	$PYTHON3_SETUP_INSTALL_COMMAND
 	cd ..
 	cp $GIT_REPO_JETSON_GPIO_FOLDER/build/lib/Jetson/GPIO/99-gpio.rules /etc/udev/rules.d/
 	udevadm control --reload-rules && sudo udevadm trigger
 	groupadd -f $GPIO_GROUP_NAME
-	usermod -aG $GPIO_GROUP_NAME $USER
+	usermod -aG $GPIO_GROUP_NAME ${USER}
 	groupadd -f $LIBI2C_GROUP_NAME
-	usermod -aG $LIBI2C_GROUP_NAME $USER
+	usermod -aG $LIBI2C_GROUP_NAME ${USER}
+	pip3 install bmp280
 	echo ""
 
 	log -e "\e[34mInstalling libi2c\n"
 	git clone $GIT_REPO_JETSON_LIBI2C $GIT_REPO_JETSON_LIBI2C_FOLDER
-	chown -R $USER:$USER $GIT_REPO_JETSON_LIBI2C_FOLDER
+	chown -R ${USER}:${USER} $GIT_REPO_JETSON_LIBI2C_FOLDER
 	cd $GIT_REPO_JETSON_LIBI2C_FOLDER
 	$PYTHON3_SETUP_INSTALL_COMMAND
 	cd ..
@@ -94,7 +95,7 @@ pai_jetson_gpio_install()
 	log -e "\e[34mImporting Air Pressure Project\n"
 	wget -O $PAI_APPS_FOLDER/AirPressureProject.tar.gz https://cdn.pai-net.org/pai-cdn/get-file?cdn-key=c7a12501-4fe6-4696-8957-86761f504eab
 	tar -xvf AirPressureProject.tar.gz > /dev/null
-	chown -R $USER:$USER AirPressureProject/
+	chown -R ${USER}:${USER} AirPressureProject/
 	rm AirPressureProject.tar.gz
 
 }
